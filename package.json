@@ -1,0 +1,24 @@
+{
+  "name": "backend-assignment1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sholehghm/BackEnd-Assignment1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sholehghm/BackEnd-Assignment1/issues"
+  },
+  "homepage": "https://github.com/Sholehghm/BackEnd-Assignment1#readme",
+  "dependencies": {
+    "axios": "^1.9.0"
+  }
+}
