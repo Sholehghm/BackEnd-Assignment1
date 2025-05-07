@@ -1,11 +1,9 @@
-// index.js
 const axios = require('axios');
 const fs = require('fs/promises');
 
 const startTime = Date.now();
 
-// 1. Fetch Data Functions
-
+//Fetch Data Functions
 async function getCarsData() {
   try {
     const response = await axios.get('https://lm-models.s3.ir-thr-at1.arvanstorage.ir/cars.json');
@@ -36,7 +34,7 @@ async function getCurrencyData() {
   }
 }
 
-// 2. Data Processing
+//Data Processing
 
 function enrichCarsData(cars, marketPrices, currencyData) {
   if (!currencyData || !currencyData.USD || !currencyData.USD.buy) {
@@ -45,7 +43,7 @@ function enrichCarsData(cars, marketPrices, currencyData) {
   const rialToUsdRate = currencyData?.USD?.buy || 1;
 
   return cars.map(car => {
-    // Find matching market price entry
+    //Find matching market price entry
     const marketEntry = marketPrices.find(mp =>
       mp.brand === car.brand &&
       mp.model === car.model &&
@@ -65,7 +63,7 @@ function enrichCarsData(cars, marketPrices, currencyData) {
   });
 }
 
-// 3. Save to JSON
+//Save to JSON
 
 async function saveToFile(filename, data) {
   try {
@@ -76,10 +74,10 @@ async function saveToFile(filename, data) {
   }
 }
 
-// 4. Data Analysis Functions
+//Data Analysis Functions
 
 function question1(cars) {
-  // Which car brand & model exists the most?
+  //Which car brand & model exists the most?
   const freqMap = {};
   cars.forEach(car => {
     const key = `${car.brand} ${car.model}`;
@@ -91,7 +89,7 @@ function question1(cars) {
 }
 
 function question2(cars) {
-  // Top 3 most expensive cars by brand and model
+  //Top 3 most expensive cars by brand and model
   const grouped = {};
   cars.forEach(car => {
     const key = `${car.brand} ${car.model}`;
@@ -114,7 +112,7 @@ function question2(cars) {
 }
 
 function question3(cars) {
-  // USD price difference between most expensive and cheapest car
+  //USD price difference between most expensive and cheapest car
   if (cars.length === 0) {
     console.log('Q3: No car data available.');
     return;
@@ -127,7 +125,7 @@ function question3(cars) {
 }
 
 function question4(cars) {
-  // How many cars exist for each color?
+  //How many cars exist for each color?
   const colorCount = {};
   cars.forEach(car => {
     colorCount[car.color] = (colorCount[car.color] || 0) + 1;
@@ -139,7 +137,7 @@ function question4(cars) {
 }
 
 function question5(cars) {
-  // For each car (brand & model), which one has the lowest price and mileage?
+  //For each car (brand & model), which one has the lowest price and mileage?
   const grouped = {};
   cars.forEach(car => {
     const key = `${car.brand} ${car.model}`;
@@ -158,7 +156,7 @@ function question5(cars) {
 }
 
 function question6(cars) {
-  // Top 5 most fair-priced cars (smallest absolute price_diff_from_average)
+  //Top 5 most fair-priced cars (smallest absolute price_diff_from_average)
   const sorted = [...cars].sort((a, b) =>
     Math.abs(a.price_diff_from_average) - Math.abs(b.price_diff_from_average)
   ).slice(0, 5);
@@ -170,7 +168,7 @@ function question6(cars) {
 }
 
 function question7(cars) {
-  // Top 5 cars with most fair mileage (smallest absolute mileage_diff_from_average)
+  //Top 5 cars with most fair mileage (smallest absolute mileage_diff_from_average)
   const sorted = [...cars].sort((a, b) =>
     Math.abs(a.mileage_diff_from_average) - Math.abs(b.mileage_diff_from_average)
   ).slice(0, 5);
@@ -181,8 +179,7 @@ function question7(cars) {
   });
 }
 
-// Main async function
-
+//Main async function
 async function main() {
   console.log('Fetching data...');
   const [cars, marketPrices, currencyData] = await Promise.all([
